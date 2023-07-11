@@ -8,7 +8,12 @@ data class CodeReceive(
 )
 
 @Serializable
-data class CodeResponse(
-    val isRight: Boolean,
-    val attemptsLeft: Int?
+data class LoginResponse(
+    val isCodeRight: Boolean,
+    val token: String? = null
+)
+
+@Serializable
+data class CodeUseResponse(
+    val attemptsLeft: Int
 )

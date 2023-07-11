@@ -8,8 +8,10 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 import ru.kaleidoscope.utils.AUTH_JWT
+import ru.kaleidoscope.utils.CLAIM_CODE
+import ru.kaleidoscope.utils.JWT_NOT_VALID
 
-fun Application.configureJWT() {
+fun Application.configureJwt() {
 
 //    secret = "secret"
 //    issuer = "http://0.0.0.0:8080/" or sso.organization.com
@@ -33,16 +35,17 @@ fun Application.configureJWT() {
                     .build()
             )
             validate { credential ->
-//                if (credential.payload.getClaim("username").asString() != "") {
-//                    JWTPrincipal(credential.payload)
-//                } else {
-//                    null
-//                }
-                JWTPrincipal(credential.payload)
+
+                val code = credential.payload.getClaim(CLAIM_CODE).asString()
+                //todo check if code exists
+                if (code == "right code") {
+                    JWTPrincipal(credential.payload)
+                } else {
+                    null
+                }
             }
             challenge { _, _ ->
-                //todo вынести сообщение в константу
-                call.respond(HttpStatusCode.Unauthorized, "Token is not valid or has expired")
+                call.respond(HttpStatusCode.Unauthorized, JWT_NOT_VALID)
             }
         }
     }
