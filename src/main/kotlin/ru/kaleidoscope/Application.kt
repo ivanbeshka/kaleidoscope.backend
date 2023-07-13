@@ -5,6 +5,7 @@ import io.ktor.server.netty.*
 import ru.kaleidoscope.plugins.configureJwt
 import ru.kaleidoscope.plugins.configureSerialization
 import ru.kaleidoscope.routing.configureAuthRouting
+import ru.kaleidoscope.routing.configureBaseRouting
 import ru.kaleidoscope.routing.configureCodeUseRouting
 import ru.kaleidoscope.routing.configureLoginRouting
 
@@ -21,4 +22,5 @@ private fun Application.configureRouting() {
     configureLoginRouting()
     configureCodeUseRouting()
     configureAuthRouting()
+    configureBaseRouting()
 }
