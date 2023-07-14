@@ -2,6 +2,7 @@ package ru.kaleidoscope
 
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
+import ru.kaleidoscope.plugins.DatabaseFactory
 import ru.kaleidoscope.plugins.configureJwt
 import ru.kaleidoscope.plugins.configureSerialization
 import ru.kaleidoscope.routing.configureAuthRouting
@@ -13,6 +14,7 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
     //порядок важен
+    DatabaseFactory.init()
     configureJwt()
     configureRouting()
     configureSerialization()
