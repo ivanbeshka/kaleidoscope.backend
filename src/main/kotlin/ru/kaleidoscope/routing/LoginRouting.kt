@@ -6,29 +6,26 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import ru.kaleidoscope.models.api.CodeReceive
-import ru.kaleidoscope.models.api.LoginResponse
+import ru.kaleidoscope.db.dao.CodesDAO
+import ru.kaleidoscope.routing.models.CodeReceive
+import ru.kaleidoscope.routing.models.LoginResponse
 import ru.kaleidoscope.utils.CLAIM_CODE
 import ru.kaleidoscope.utils.JWT_LIFETIME
 import java.util.*
 
-fun Application.configureLoginRouting() {
+fun Application.configureLoginRouting(codesDAO: CodesDAO) {
 
     val secret = environment.config.property("jwt.secret").getString()
-//    val issuer = environment.config.property("jwt.issuer").getString()
-//    val audience = environment.config.property("jwt.audience").getString()
 
     routing {
 
         post("/login") {
-            val receive = call.receive<CodeReceive>()
+            val code = call.receive<CodeReceive>().code
 
-            //todo check code in db
-            if (receive.code == "right code") {
-                val token = JWT.create()
-//                .withAudience(audience)
-//                .withIssuer(issuer)
-                    .withClaim(CLAIM_CODE, receive.code)
+            if (codesDAO.isCodeExists(code)) {
+                val token = JWT
+                    .create()
+                    .withClaim(CLAIM_CODE, code)
                     .withExpiresAt(Date(System.currentTimeMillis() + JWT_LIFETIME))
                     .sign(Algorithm.HMAC256(secret))
                 call.respond(LoginResponse(true, token))

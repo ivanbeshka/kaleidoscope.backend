@@ -1,4 +1,4 @@
-package ru.kaleidoscope.models.api
+package ru.kaleidoscope.routing.models
 
 import kotlinx.serialization.Serializable
 

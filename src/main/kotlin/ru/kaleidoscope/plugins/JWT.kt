@@ -7,20 +7,14 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
+import ru.kaleidoscope.db.dao.CodesDAO
 import ru.kaleidoscope.utils.AUTH_JWT
 import ru.kaleidoscope.utils.CLAIM_CODE
 import ru.kaleidoscope.utils.JWT_NOT_VALID
 
-fun Application.configureJwt() {
-
-//    secret = "secret"
-//    issuer = "http://0.0.0.0:8080/" or sso.organization.com
-//    audience = "http://0.0.0.0:8080/hello" or ios.organization.appname
-//    realm = "Access to 'hello'"
+fun Application.configureJWT(codesDAO: CodesDAO) {
 
     val secret = environment.config.property("jwt.secret").getString()
-//    val issuer = environment.config.property("jwt.issuer").getString()
-//    val audience = environment.config.property("jwt.audience").getString()
     val myRealm = environment.config.property("jwt.realm").getString()
 
     install(Authentication) {
@@ -30,15 +24,12 @@ fun Application.configureJwt() {
             verifier(
                 JWT
                     .require(Algorithm.HMAC256(secret))
-//                .withAudience(audience)
-//                .withIssuer(issuer)
                     .build()
             )
             validate { credential ->
-
                 val code = credential.payload.getClaim(CLAIM_CODE).asString()
-                //todo check if code exists
-                if (code == "right code") {
+
+                if (codesDAO.isCodeExists(code)) {
                     JWTPrincipal(credential.payload)
                 } else {
                     null
