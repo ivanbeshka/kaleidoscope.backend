@@ -28,9 +28,9 @@ fun Application.configureLoginRouting(codesDAO: CodesDAO) {
                     .withClaim(CLAIM_CODE, code)
                     .withExpiresAt(Date(System.currentTimeMillis() + JWT_LIFETIME))
                     .sign(Algorithm.HMAC256(secret))
-                call.respond(LoginResponse(true, token))
+                call.respond(LoginResponse(token))
             } else {
-                call.respond(LoginResponse(false))
+                call.respond(LoginResponse(null))
             }
         }
     }

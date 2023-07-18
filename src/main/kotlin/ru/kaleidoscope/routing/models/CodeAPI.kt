@@ -9,7 +9,6 @@ data class CodeReceive(
 
 @Serializable
 data class LoginResponse(
-    val isCodeRight: Boolean,
     val token: String? = null
 )
 
