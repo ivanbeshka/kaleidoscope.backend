@@ -34,7 +34,8 @@ private fun Application.configureRouting(codesDAO: CodesDAO) {
 private fun createCodesDAO(): CodesDAO =
     CodesDAOImpl().apply {
         runBlocking {
-//            createCodes(1)
+            //todo remove
+            createCodes(1)
         }
     }
 
