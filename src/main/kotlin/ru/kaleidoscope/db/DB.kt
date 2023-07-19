@@ -1,7 +1,5 @@
 package ru.kaleidoscope.db
 
-import io.ktor.http.*
-import io.ktor.server.application.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -10,10 +8,10 @@ import org.jetbrains.exposed.sql.transactions.transaction
 import ru.kaleidoscope.db.models.CodeModel
 
 object DatabaseFactory {
-    fun init(jdbcURL: String) {
-        val database = Database.connect(jdbcURL, DRIVER_CLASS_NAME)
+    fun init() {
+        val database = Database.connect(JDBC_URL, DRIVER_CLASS_NAME)
         transaction(database) {
-//            SchemaUtils.create(CodeModel)
+            SchemaUtils.create(CodeModel)
         }
     }
 
@@ -21,4 +19,5 @@ object DatabaseFactory {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     private const val DRIVER_CLASS_NAME = "org.h2.Driver"
+    private const val JDBC_URL = "jdbc:h2:file:./build/db"
 }
