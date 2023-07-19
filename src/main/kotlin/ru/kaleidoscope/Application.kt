@@ -24,6 +24,7 @@ fun Application.module() {
     configureJWT(codesDAO)
     configureRouting(codesDAO)
     configureSerialization()
+    println(System.getProperty("user.dir"))
 }
 
 private fun Application.configureRouting(codesDAO: CodesDAO) {
