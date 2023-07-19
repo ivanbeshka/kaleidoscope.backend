@@ -12,12 +12,16 @@ import ru.kaleidoscope.routing.configureAuthRouting
 import ru.kaleidoscope.routing.configureBaseRouting
 import ru.kaleidoscope.routing.configureCodeUseRouting
 import ru.kaleidoscope.routing.configureLoginRouting
+import java.io.File
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
     //порядок важен
     val dbURL = environment.config.property("ktor.deployment.db_path").getString()
+    val file = File("f")
+    file.createNewFile()
+    println(file.toURI().toURL().toString())
     DatabaseFactory.init(dbURL)
     val codesDAO = createCodesDAO()
     configureCORS()
