@@ -10,6 +10,7 @@ fun Application.configureCORS() {
         allowHost( "string-art.vercel.app:3000", schemes = listOf("https"))
         allowMethod(HttpMethod.Post)
         allowMethod(HttpMethod.Get)
+        allowMethod(HttpMethod.Options)
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.Authorization)
     }
