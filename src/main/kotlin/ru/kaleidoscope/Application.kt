@@ -2,7 +2,6 @@ package ru.kaleidoscope
 
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
-import kotlinx.coroutines.runBlocking
 import ru.kaleidoscope.db.DatabaseFactory
 import ru.kaleidoscope.db.dao.CodesDAO
 import ru.kaleidoscope.db.dao.CodesDAOImpl
@@ -18,13 +17,13 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
     //порядок важен
-    DatabaseFactory.init()
+    val dbURL = environment.config.property("ktor.deployment.db_path").getString()
+    DatabaseFactory.init(dbURL)
     val codesDAO = createCodesDAO()
     configureCORS()
     configureJWT(codesDAO)
     configureRouting(codesDAO)
     configureSerialization()
-    println(System.getProperty("user.dir"))
 }
 
 private fun Application.configureRouting(codesDAO: CodesDAO) {
