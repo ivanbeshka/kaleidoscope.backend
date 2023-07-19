@@ -34,9 +34,9 @@ fun Application.configureLoginRouting(codesDAO: CodesDAO) {
                     call.respond(LoginResponse(null))
                 }
             }
-            options {
-                call.respond(HttpStatusCode.OK)
-            }
+//            options {
+//                call.respond(HttpStatusCode.OK)
+//            }
         }
 
     }
