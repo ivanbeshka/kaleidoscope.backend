@@ -22,7 +22,7 @@ fun Application.module() {
     val file = File("f")
     file.createNewFile()
     println(file.toURI().toURL().toString())
-    File("~/").walkTopDown().forEach { println(it) }
+    File("/app").walkTopDown().forEach { println(it) }
     DatabaseFactory.init(dbURL)
     val codesDAO = createCodesDAO()
     configureCORS()
