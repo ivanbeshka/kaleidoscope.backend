@@ -19,5 +19,5 @@ object DatabaseFactory {
         newSuspendedTransaction(Dispatchers.IO) { block() }
 
     private const val DRIVER_CLASS_NAME = "org.h2.Driver"
-    private const val JDBC_URL = "jdbc:h2:file:./db"
+    private const val JDBC_URL = "jdbc:h2:file:/db"
 }
