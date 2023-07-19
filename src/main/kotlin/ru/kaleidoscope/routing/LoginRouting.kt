@@ -2,6 +2,7 @@ package ru.kaleidoscope.routing
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
@@ -18,20 +19,25 @@ fun Application.configureLoginRouting(codesDAO: CodesDAO) {
     val secret = environment.config.property("jwt.secret").getString()
 
     routing {
+        route("/login") {
+            post {
+                val code = call.receive<CodeReceive>().code
 
-        post("/login") {
-            val code = call.receive<CodeReceive>().code
-
-            if (codesDAO.isCodeExists(code)) {
-                val token = JWT
-                    .create()
-                    .withClaim(CLAIM_CODE, code)
-                    .withExpiresAt(Date(System.currentTimeMillis() + JWT_LIFETIME))
-                    .sign(Algorithm.HMAC256(secret))
-                call.respond(LoginResponse(token))
-            } else {
-                call.respond(LoginResponse(null))
+                if (codesDAO.isCodeExists(code)) {
+                    val token = JWT
+                        .create()
+                        .withClaim(CLAIM_CODE, code)
+                        .withExpiresAt(Date(System.currentTimeMillis() + JWT_LIFETIME))
+                        .sign(Algorithm.HMAC256(secret))
+                    call.respond(LoginResponse(token))
+                } else {
+                    call.respond(LoginResponse(null))
+                }
+            }
+            options {
+                call.respond(HttpStatusCode.OK)
             }
         }
+
     }
 }
