@@ -11,7 +11,7 @@ object DatabaseFactory {
     fun init() {
         val database = Database.connect(JDBC_URL, DRIVER_CLASS_NAME)
         transaction(database) {
-            SchemaUtils.create(CodeModel)
+//            SchemaUtils.create(CodeModel)
         }
     }
 

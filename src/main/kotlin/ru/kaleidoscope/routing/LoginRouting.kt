@@ -19,25 +19,20 @@ fun Application.configureLoginRouting(codesDAO: CodesDAO) {
     val secret = environment.config.property("jwt.secret").getString()
 
     routing {
-        route("/login") {
-            post {
-                val code = call.receive<CodeReceive>().code
 
-                if (codesDAO.isCodeExists(code)) {
-                    val token = JWT
-                        .create()
-                        .withClaim(CLAIM_CODE, code)
-                        .withExpiresAt(Date(System.currentTimeMillis() + JWT_LIFETIME))
-                        .sign(Algorithm.HMAC256(secret))
-                    call.respond(LoginResponse(token))
-                } else {
-                    call.respond(LoginResponse(null))
-                }
+        post("/login") {
+            val code = call.receive<CodeReceive>().code
+
+            if (codesDAO.isCodeExists(code)) {
+                val token = JWT
+                    .create()
+                    .withClaim(CLAIM_CODE, code)
+                    .withExpiresAt(Date(System.currentTimeMillis() + JWT_LIFETIME))
+                    .sign(Algorithm.HMAC256(secret))
+                call.respond(LoginResponse(token))
+            } else {
+                call.respond(LoginResponse(null))
             }
-//            options {
-//                call.respond(HttpStatusCode.OK)
-//            }
         }
-
     }
 }

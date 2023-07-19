@@ -9,12 +9,6 @@ import ru.kaleidoscope.utils.generateRandomCodes
 import java.time.LocalDate
 
 class CodesDAOImpl : CodesDAO {
-    override suspend fun getCodeAttempts(code: String): Int? = dbQuery {
-        CodeModel
-            .select { CodeModel.code eq code }
-            .firstOrNull()
-            ?.get(CodeModel.attemptsLeft)
-    }
 
     override suspend fun isCodeExists(code: String): Boolean = dbQuery {
         CodeModel
@@ -28,6 +22,13 @@ class CodesDAOImpl : CodesDAO {
                 this[CodeModel.code] = it
             }
             .insertCodes()
+    }
+
+    override suspend fun getCodeAttempts(code: String): Int? = dbQuery {
+        CodeModel
+            .select { CodeModel.code eq code }
+            .firstOrNull()
+            ?.get(CodeModel.attemptsLeft)
     }
 
     override suspend fun minusAttempt(code: String): Boolean = dbQuery {
