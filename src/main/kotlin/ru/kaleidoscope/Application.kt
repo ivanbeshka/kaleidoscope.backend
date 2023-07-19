@@ -6,6 +6,7 @@ import kotlinx.coroutines.runBlocking
 import ru.kaleidoscope.db.DatabaseFactory
 import ru.kaleidoscope.db.dao.CodesDAO
 import ru.kaleidoscope.db.dao.CodesDAOImpl
+import ru.kaleidoscope.plugins.configureCORS
 import ru.kaleidoscope.plugins.configureJWT
 import ru.kaleidoscope.plugins.configureSerialization
 import ru.kaleidoscope.routing.configureAuthRouting
@@ -19,6 +20,7 @@ fun Application.module() {
     //порядок важен
     DatabaseFactory.init()
     val codesDAO = createCodesDAO()
+    configureCORS()
     configureJWT(codesDAO)
     configureRouting(codesDAO)
     configureSerialization()

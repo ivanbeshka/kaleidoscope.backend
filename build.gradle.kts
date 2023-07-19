@@ -29,6 +29,7 @@ dependencies {
     //base
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
+    implementation("io.ktor:ktor-server-cors:$ktor_version")
 
     //db
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
