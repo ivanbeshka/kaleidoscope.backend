@@ -2,7 +2,6 @@ package ru.kaleidoscope
 
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
-import kotlinx.coroutines.runBlocking
 import ru.kaleidoscope.db.DatabaseFactory
 import ru.kaleidoscope.db.dao.CodesDAO
 import ru.kaleidoscope.db.dao.CodesDAOImpl
@@ -35,9 +34,9 @@ private fun Application.configureRouting(codesDAO: CodesDAO) {
 
 private fun createCodesDAO(): CodesDAO =
     CodesDAOImpl().apply {
-        runBlocking {
-            //todo remove
-            createCodes(1)
-        }
+//        runBlocking {
+//            //todo remove
+//            createCodes(1)
+//        }
     }
 

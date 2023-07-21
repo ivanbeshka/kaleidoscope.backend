@@ -6,6 +6,8 @@ import io.ktor.server.config.*
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.jetbrains.exposed.sql.transactions.transaction
 import ru.kaleidoscope.db.models.CodeModel
@@ -17,6 +19,7 @@ object DatabaseFactory {
 
         val database = Database.connect(HikariDataSource(hikariConfig))
         transaction(database) {
+            addLogger(StdOutSqlLogger)
             SchemaUtils.create(CodeModel)
         }
     }

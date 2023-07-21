@@ -47,6 +47,12 @@ class CodesDAOImpl : CodesDAO {
             } > 0
     }
 
+    override suspend fun getAllCodes(): List<CodeDB> = dbQuery {
+        CodeModel
+            .selectAll()
+            .map { it.toCodeDB() }
+    }
+
     private fun ResultRow.toCodeDB() =
         CodeDB(
             id = this[CodeModel.id],
