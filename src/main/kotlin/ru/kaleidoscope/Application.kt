@@ -18,10 +18,7 @@ fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 fun Application.module() {
     //порядок важен
-//    val dbURL = environment.config.property("ktor.deployment.db_path").getString()
-//    val path = environment.config.property("ktor.deployment.path").getString()
-//    File(path).walkTopDown().forEach { println(it.toURI().toURL().toString()) }
-    DatabaseFactory.init()
+    DatabaseFactory.init(environment.config)
     val codesDAO = createCodesDAO()
     configureCORS()
     configureJWT(codesDAO)
