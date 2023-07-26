@@ -8,6 +8,7 @@ import ru.kaleidoscope.db.dao.CodesDAOImpl
 import ru.kaleidoscope.plugins.configureCORS
 import ru.kaleidoscope.plugins.configureJWT
 import ru.kaleidoscope.plugins.configureSerialization
+import ru.kaleidoscope.bot.configureTelegramBot
 import ru.kaleidoscope.routing.configureAuthRouting
 import ru.kaleidoscope.routing.configureBaseRouting
 import ru.kaleidoscope.routing.configureCodeUseRouting
@@ -23,6 +24,7 @@ fun Application.module() {
     configureJWT(codesDAO)
     configureRouting(codesDAO)
     configureSerialization()
+    configureTelegramBot(codesDAO)
 }
 
 private fun Application.configureRouting(codesDAO: CodesDAO) {
@@ -32,11 +34,5 @@ private fun Application.configureRouting(codesDAO: CodesDAO) {
     configureBaseRouting()
 }
 
-private fun createCodesDAO(): CodesDAO =
-    CodesDAOImpl().apply {
-//        runBlocking {
-//            //todo remove
-//            createCodes(1)
-//        }
-    }
+private fun createCodesDAO(): CodesDAO = CodesDAOImpl()
 

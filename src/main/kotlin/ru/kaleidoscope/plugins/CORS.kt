@@ -5,7 +5,7 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.cors.routing.*
 
 fun Application.configureCORS() {
-    install(CORS){
+    install(CORS) {
         maxAgeInSeconds = 600 //sec
         //todo
 //        allowHost( "string-art.vercel.app", schemes = listOf("https"))

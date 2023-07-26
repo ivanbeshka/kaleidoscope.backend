@@ -1,6 +1,10 @@
 val ktor_version: String by project
 val kotlin_version: String by project
 
+val telegram_bot_version: String by project
+
+val apache_poi_version: String by project
+
 val exposed_version: String by project
 val postgresql_version: String by project
 val hikari_version: String by project
@@ -24,6 +28,7 @@ application {
 
 repositories {
     mavenCentral()
+    maven { setUrl("https://jitpack.io") }
 }
 
 dependencies {
@@ -31,6 +36,12 @@ dependencies {
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-netty-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-cors:$ktor_version")
+
+    //bot
+    implementation("io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:$telegram_bot_version")
+
+    //word doc
+    implementation(group = "org.apache.poi", name = "poi-ooxml", version = apache_poi_version)
 
     //db
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
